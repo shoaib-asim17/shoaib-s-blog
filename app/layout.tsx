@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import "../styles/globals.css";
 
+export const metadata = {
+  title: "Shoaib's blog",
+  description: "A FUN PLACE",
+}
 export default function RootLayout({
   children,
 }: {

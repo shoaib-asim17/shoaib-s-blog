@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [  "./app/**/*.{js,ts,jsx,tsx,mdx,css}",
-  "./page/**/*.{js,ts,jsx,tsx,mdx,css}",
+  content: [  "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  "./pages/**/*.{js,ts,jsx,tsx,mdx}",
   "./components/**/*.{js,ts,jsx,tsx,mdx}",
 
   // Or if using `src` directory:
@@ -9,6 +9,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    // ...
+  ],
 }
 
