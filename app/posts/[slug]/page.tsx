@@ -1,23 +1,40 @@
-import fs from 'fs';
-import Markdown from 'markdown-to-jsx';
-const getPostContent = (slug:string)=> {
-    const folder = "posts/";
-    const file= `${folder}${slug}.md`;
-    const content = fs.readFileSync(file,"utf8");
-    return content;
-}
+import fs from "fs";
+import Markdown from "markdown-to-jsx";
+import matter from "gray-matter";
+import getPostMetadata from "../../../components/getPostMetadata";
 
-const PostPage=(props:any) =>{
-    const slug=props.params.slug;
-    const content = getPostContent(slug);
+const getPostContent = (slug: string) => {
+  const folder = "posts/";
+  const file = `${folder}${slug}.md`;
+  const content = fs.readFileSync(file, "utf8");
+  const matterResult = matter(content);
+  return matterResult;
+};
 
-    return(
-        <div>
-            <h1>This is :{slug}</h1>
-            <Markdown>{content}</Markdown>
-        </div>
-    );
-}
+export const generateStaticParams = async () => {
+  const posts = getPostMetadata();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+};
 
+const PostPage = (props: any) => {
+  const slug = props.params.slug;
+  const post = getPostContent(slug);
+  return (
+    <div className="backdrop-blur-2xl bg-white/10	">
+      <div className="my-12 text-center">
+        <h1 className="text-2xl text-slate-600 ">{post.data.title}</h1>
+        <p className="text-slate-400 mt-2">{post.data.date}</p>
+      </div>
 
+      <article className="prose bg-black">
+        <Markdown className="text-white
+        " >{post.content}</Markdown>
+        
+      </article>
+    </div>
+  );
+};
+ 
 export default PostPage;
